@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cloud File Upload and Download</title>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .file-input {
+        margin-bottom: 10px;
+      }
+      .file-list {
+        margin-top: 20px;
+      }
+      .file-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .file-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Cloud File Upload and Download</h1>
+      <input type="file" id="fileInput" class="file-input" multiple />
+      <button onclick="confirmUpload()">Confirm Upload</button>
+      <div class="file-list" id="fileList"></div>
+    </div>
+
+    <script>
+      const fileInput = document.getElementById('fileInput');
+      const fileList = document.getElementById('fileList');
+      let filesToUpload = [];
+
+      fileInput.addEventListener('change', showFiles);
+
+      function showFiles() {
+        const files = fileInput.files;
+        if (files.length === 0) {
+          alert('Please select a file to upload.');
+          return;
+        }
+
+        fileList.innerHTML = '';
+        filesToUpload = [];
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          filesToUpload.push(file);
+          const listItem = document.createElement('div');
+          listItem.className = 'file-item';
+
+          const fileIcon = document.createElement('img');
+          fileIcon.className = 'file-icon';
+          fileIcon.src = getFileIcon(file);
+
+          const fileName = document.createElement('span');
+          fileName.textContent = file.name;
+
+          listItem.appendChild(fileIcon);
+          listItem.appendChild(fileName);
+          fileList.appendChild(listItem);
+        }
+      }
+
+      function confirmUpload() {
+        if (filesToUpload.length === 0) {
+          alert('No files to upload. Please select files first.');
+          return;
+        }
+
+        // Here you would add the actual upload logic, e.g., sending files to a server
+        alert('Files uploaded successfully!');
+      }
+
+      function getFileIcon(file) {
+        const fileType = file.type;
+        if (fileType.startsWith('image/')) {
+          return 'icons/image-icon.png';
+        } else if (fileType === 'application/pdf') {
+          return 'icons/pdf-icon.png';
+        } else if (fileType === 'application/zip') {
+          return 'icons/zip-icon.png';
+        } else {
+          return 'icons/file-icon.png';
+        }
+      }
+    </script>
+  </body>
+</html>
+
+
+
